@@ -1,134 +1,140 @@
-# 🚀 ET Hackathon Project – Multi-Agent AI System (AutoFlow AI)
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/23b56905-a1ee-44bd-9728-76964f77e75e" /># 🚀 AutoFlow AI — Multi-Agent Autonomous Workflow System
 
-AutoFlow AI is a multi-agent collaboration system.
+## 🌐 Live Demo
 
-🔗 Live Demo: https://your-live-app-link.com  
-📂 GitHub Repo: https://github.com/khetmalisvedant-tech/ET_Hackathon
-
-## 🧠 Overview
-
-AutoFlow AI is a **multi-agent collaboration system** designed to automate complex workflows using intelligent AI agents.
-The system mimics real-world team collaboration by assigning tasks to specialized agents such as planning, data processing, decision-making, execution, and validation.
-
-This project is built for the **ET AI Hackathon 2026** and focuses on creating a **scalable, autonomous, and production-ready AI system**.
-
----
+👉 Frontend: https://et-hackathon-nu.vercel.app
+👉 Backend API: https://et-hackathon-o4iv.onrender.com
 
 ## 🎯 Problem Statement
 
-Modern workflows require coordination between multiple roles (planner, analyst, executor, reviewer).
-Manual coordination leads to:
+This project is built for **ET AI Hackathon 2026** under:
 
-* ❌ Delays
-* ❌ Errors
-* ❌ Lack of accountability
-* ❌ Inefficient execution
+### 🟢 Agentic AI for Autonomous Enterprise Workflows
 
-👉 Our solution: **Automate collaboration using AI agents**
+AND
+
+### 🟢 Domain-Specialized AI Agents (Agriculture)
 
 ---
 
-## 💡 Solution
+## 🧠 What is AutoFlow AI?
 
-AutoFlow AI introduces a **multi-agent architecture** where each agent has a specific responsibility:
+AutoFlow AI is a **multi-agent intelligent system** that autonomously processes user queries and executes a complete workflow:
 
-| Agent                | Role                                |
-| -------------------- | ----------------------------------- |
-| 🧩 Planner Agent     | Breaks user request into tasks      |
-| 📊 Data Agent        | Fetches and processes required data |
-| 🧠 Decision Agent    | Chooses best strategy               |
-| ⚙️ Action Agent      | Executes the task                   |
-| ✅ Verification Agent | Validates output                    |
-| 📈 Monitoring Agent  | Tracks progress & errors            |
+1. 🌱 Decision Making
+2. ⚡ Action Planning
+3. 📊 Monitoring
+4. ✅ Verification
+
+All without human intervention.
+
+---
+
+## 🏗️ System Architecture
+
+```
+User Input
+    ↓
+Decision Agent (LLM-based reasoning)
+    ↓
+Action Agent (task execution plan)
+    ↓
+Monitoring Agent (environment tracking)
+    ↓
+Verification Agent (output validation)
+    ↓
+Final Response to User
+```
 
 ---
 
 ## ⚙️ Tech Stack
 
-### Frontend
+### 🖥️ Frontend
 
 * React (Vite)
 * Tailwind CSS
-* Modern UI with chat interface
+* Deployed on Vercel
 
-### Backend
+### 🔧 Backend
 
 * FastAPI
 * Python
-* REST APIs
+* Multi-agent architecture
 
-### AI / LLM
+### 🧠 AI Layer
 
-* Groq API / OpenAI (configurable)
-* Streaming responses
+* Groq API (LLaMA 3 model)
 
-### Other Tools
+### 🌍 Data Integration
 
-* Uvicorn (server)
-* dotenv (environment variables)
-
----
-
-## 🏗️ Project Structure
-
-```
-ET_Hack/
-│
-├── backend/
-│   ├── main.py
-│   ├── engine.py
-│   ├── routes/
-│   ├── agents/
-│   └── models/
-│
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── components/
-│   │   └── styles/
-│
-├── .gitignore
-└── README.md
-```
+* Weather API (real-time / fallback)
+* Geolocation API
 
 ---
 
-## 🚀 Features
+## 🔥 Key Features
 
-* 🤖 Multi-agent collaboration system
-* ⚡ Real-time AI responses (streaming)
-* 🎨 Modern chat UI
-* 🔄 Dynamic model switching
-* 🧠 Intelligent task breakdown
-* 📊 Workflow tracking
-* 🔐 Secure API handling
+* ✅ Multi-agent autonomous workflow
+* ✅ Real-time weather-based decision making
+* ✅ Water Stress Index (WSI) calculation
+* ✅ Intelligent farming recommendations
+* ✅ Error-resilient fallback system
+* ✅ Agent execution logs (visible in UI)
+
+---
+
+## 📊 Workflow Example
+
+### Input:
+
+```
+Should I irrigate my farm today?
+```
+
+### Output:
+
+* 🌱 Decision → Irrigation recommended
+* ⚡ Action → Start irrigation for 20 minutes
+* 📊 Monitoring → Track humidity & temperature
+* ✅ Verification → Action validated
 
 ---
 
 ## 🧪 How It Works
 
 1. User enters a query
-2. Planner agent breaks it into steps
-3. Data agent gathers required info
-4. Decision agent selects best approach
-5. Action agent executes
-6. Verification agent checks output
-7. Final result returned to user
+2. System fetches location + weather
+3. Calculates WSI (Water Stress Index)
+4. Agents collaborate to produce output
+5. Response is returned in structured format
 
 ---
 
-## 🛠️ Installation & Setup
+## ⚠️ Error Handling (Important)
 
-### 1️⃣ Clone Repository
+To ensure system stability:
+
+* Fallback logic is implemented if AI fails
+* Each agent is isolated using try/catch
+* Workflow continues even if one component fails
+
+This ensures **consistent demo performance**
+
+---
+
+## 🛠️ Local Setup
+
+### 1. Clone Repo
 
 ```bash
-git clone https://github.com/your-username/ET_Hackathon.git
+git clone https://github.com/khetmalisvedant-tech/ET_Hackathon.git
 cd ET_Hackathon
 ```
 
 ---
 
-### 2️⃣ Backend Setup
+### 2. Backend Setup
 
 ```bash
 cd backend
@@ -137,12 +143,11 @@ pip install -r requirements.txt
 
 Create `.env` file:
 
-```
-OPENAI_API_KEY=your_key
-GROQ_API_KEY=your_key
+```env
+GROQ_API_KEY=your_api_key_here
 ```
 
-Run server:
+Run backend:
 
 ```bash
 uvicorn main:app --reload
@@ -150,7 +155,7 @@ uvicorn main:app --reload
 
 ---
 
-### 3️⃣ Frontend Setup
+### 3. Frontend Setup
 
 ```bash
 cd frontend
@@ -160,70 +165,90 @@ npm run dev
 
 ---
 
-## 🌐 API Endpoints
+## 🚀 Deployment
 
-| Method | Endpoint  | Description         |
-| ------ | --------- | ------------------- |
-| POST   | `/chat`   | Send user query     |
-| GET    | `/health` | Server health check |
+### Backend (Render)
 
----
+* Root Directory: `backend`
+* Start Command:
 
-## 🧩 Future Improvements
-
-* 🌍 Multi-language support
-* 📱 Mobile app
-* 🔌 Plugin system for agents
-* 🧠 Memory-based AI (context retention)
-* 📊 Dashboard analytics
+```bash
+uvicorn main:app --host 0.0.0.0 --port 10000
+```
 
 ---
 
-## 🏆 Hackathon Highlights
+### Frontend (Vercel)
 
-* Unique multi-agent architecture
-* Real-world workflow automation
-* Scalable and modular design
-* Production-ready approach
+Environment Variable:
+
+```env
+VITE_API_URL=https://et-hackathon-o4iv.onrender.com
+```
 
 ---
 
-## 🔐 Security
+## 📹 Demo Video
 
-* API keys stored in `.env`
-* No sensitive data exposed
-* Secure backend communication
+
+👉 (Add your video link here — Google Drive / YouTube)
+
+---
+
+## 📐 Architecture Diagram
+<img width="1536" height="1024" alt="architecture png" src="https://github.com/user-attachments/assets/820f0e9f-e8f2-4c68-b2a6-b7c866a276a2" />
+
+
+---
+
+## 📈 Impact Model
+
+### Problem:
+
+Farmers rely on manual decisions → inefficient & inconsistent
+
+### Solution:
+
+AutoFlow AI automates:
+
+* Decision-making
+* Action planning
+* Monitoring
+
+### Impact:
+
+* ⏱️ Saves decision time
+* 📊 Improves accuracy using data
+* 🤖 Enables autonomous workflows
+
+---
+
+## 🏆 Why This Project Stands Out
+
+* Full **multi-agent system** (not single LLM call)
+* Handles **real-world uncertainty** (fallback logic)
+* Demonstrates **autonomous execution**
+* Built for **scalability and real-world use**
 
 ---
 
 ## 👨‍💻 Author
 
-Vedant Khetmali
-ET Hackathon 2026 Participant
+Vedant
+GitHub: https://github.com/khetmalisvedant-tech
 
 ---
 
-## ⭐ Acknowledgements
+## 🙌 Acknowledgements
 
-* OpenAI / Groq APIs
-* FastAPI
-* React Community
+* ET AI Hackathon 2026
+* Groq (LLM API)
+* Open-source community
 
----
+## ⭐ Final Note
 
-## 📌 Note
+This project demonstrates how **AI agents can collaborate to solve real-world problems autonomously**, making workflows faster, smarter, and more reliable.
 
-This project is actively under development as part of the hackathon.
-Further improvements and features will be added.
-
----
-
-## 🚀 Demo (Optional)
-
-*Add deployment link here (Render / Vercel)*
-
----
-
-## ❤️ Support
-
-If you like this project, consider giving it a ⭐ on GitHub!
+```
+"From input → decision → action → validation — fully automated."
+```

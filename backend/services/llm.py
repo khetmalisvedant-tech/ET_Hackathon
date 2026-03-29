@@ -1,13 +1,29 @@
-import ollama
+import os
+from groq import Groq
 
-print("LLM using Ollama")
+# Initialize Groq client using environment variable
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-def generate_response(prompt):
-    response = ollama.chat(
-        model="llama3",   # you can also use mistral
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+print("LLM using Groq (LLaMA) 🚀")
 
-    return response['message']['content']
+def generate_response(prompt: str) -> str:
+    """
+    Generate response from LLaMA model using Groq API
+    """
+
+    try:
+        response = client.chat.completions.create(
+            model="llama3-8b-8192",  # Fast + free model
+            messages=[
+                {"role": "system", "content": "You are an intelligent AI assistant helping users."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=1024
+        )
+
+        return response.choices[0].message.content
+
+    except Exception as e:
+        print("Error in LLM:", e)
+        return "⚠️ Error generating response. Please try again."

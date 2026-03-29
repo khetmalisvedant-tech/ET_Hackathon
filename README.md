@@ -1,5 +1,10 @@
 # 🚀 ET Hackathon Project – Multi-Agent AI System (AutoFlow AI)
 
+AutoFlow AI is a multi-agent collaboration system.
+
+🔗 Live Demo: https://your-live-app-link.com  
+📂 GitHub Repo: https://github.com/khetmalisvedant-tech/ET_Hackathon
+
 ## 🧠 Overview
 
 AutoFlow AI is a **multi-agent collaboration system** designed to automate complex workflows using intelligent AI agents.

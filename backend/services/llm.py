@@ -1,11 +1,3 @@
-import os
-from groq import Groq
-
-# Correct: use ENV VARIABLE NAME
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-print("LLM using Groq (LLaMA) 🚀")
-
 def generate_response(prompt: str) -> str:
     try:
         response = client.chat.completions.create(
@@ -22,4 +14,4 @@ def generate_response(prompt: str) -> str:
 
     except Exception as e:
         print("Error in LLM:", e)
-        return "⚠️ Error generating response. Please try again."
+        return "⚠️ AI failed to generate response. Please try again."

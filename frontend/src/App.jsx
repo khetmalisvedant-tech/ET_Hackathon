@@ -4,8 +4,9 @@ import './App.css'
 function App() {
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState([
-    {type: 'ai',
-    text: `👋 Hello! I'm AutoFlow AI.
+    {
+      type: 'ai',
+      text: `👋 Hello! I'm AutoFlow AI.
 
 I can help you with:
 🌾 Crop decisions
@@ -13,7 +14,8 @@ I can help you with:
 🌱 Fertilizer recommendations
 📊 Smart agricultural insights
 
-👉 Ask me anything about your farm!`}
+👉 Ask me anything about your farm!`,
+    },
   ])
   const [loading, setLoading] = useState(false)
 
@@ -33,6 +35,11 @@ I can help you with:
 
   const [autoScroll, setAutoScroll] = useState(true)
   const [showScrollBtn, setShowScrollBtn] = useState(false)
+
+  // ✅ ADD THIS (API URL)
+  const API_URL =
+    import.meta.env.VITE_API_URL ||
+    "https://et-hackathon-o4iv.onrender.com"
 
   // 📍 Get location
   useEffect(() => {
@@ -82,7 +89,8 @@ I can help you with:
     setConfidence(null)
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/execute', {
+      // ✅ ONLY CHANGE HERE
+      const res = await fetch(`${API_URL}/execute`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -93,27 +101,21 @@ I can help you with:
 
       const data = await res.json()
 
-      // 🧠 Logs
       setLogs(data.logs || [])
-
-      // 🌦 Weather
       setWeatherInfo(data.weather)
       setLocationName(data.location)
 
-      // 📊 WSI
       setWsi(data.wsi)
       setWsiLevel(data.wsi_level)
 
       setLoading(false)
 
-      // 🔥 Extract confidence
       const verificationText = data.response?.verification || ""
       const match = verificationText.match(/Confidence:\s*(\d+)/i)
       if (match) {
         setConfidence(match[1])
       }
 
-      // 🔥 Format action
       const actionData = data.response?.action
 
       let formattedAction = "No action available"
@@ -135,7 +137,6 @@ ${actionData.steps.map(step => `
         formattedAction = "⚠️ Action generation failed"
       }
 
-      // 💬 Final response
       const formattedResponse = `
 🌱 Decision:
 ${data.response?.decision || ""}
@@ -164,7 +165,6 @@ ${data.response?.verification || ""}
     }
   }
 
-  // ⌨️ Enter to send
   const handleKeyDown = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -176,7 +176,6 @@ ${data.response?.verification || ""}
     <div className="app">
       <h1 className="header">🚀 AutoFlow AI</h1>
 
-      {/* 🌦 Weather */}
       {weatherInfo && (
         <div className="weather-box">
           <p>📍 {locationName}</p>
@@ -187,7 +186,6 @@ ${data.response?.verification || ""}
         </div>
       )}
 
-      {/* 📊 WSI */}
       {wsi && (
         <div className="wsi-box">
           <p>📊 WSI: {wsi}</p>
@@ -195,12 +193,7 @@ ${data.response?.verification || ""}
         </div>
       )}
 
-      <div
-        className="chat-container"
-        ref={chatContainerRef}
-        onScroll={handleScroll}
-      >
-        {/* 🧠 Logs */}
+      <div className="chat-container" ref={chatContainerRef} onScroll={handleScroll}>
         {loading && logs.length === 0 && (
           <div className="thinking-box">
             <p><b>🧠 Agents Running...</b></p>
@@ -217,17 +210,12 @@ ${data.response?.verification || ""}
           </div>
         )}
 
-        {/* 💬 Messages */}
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={msg.type === 'user' ? 'user-msg' : 'ai-msg'}
-          >
+          <div key={index} className={msg.type === 'user' ? 'user-msg' : 'ai-msg'}>
             {msg.type === 'user' ? (
               <p>{msg.text}</p>
             ) : (
               <div>
-                {/* ✅ Confidence badge */}
                 {confidence && (
                   <div className="confidence-badge">
                     ✅ Confidence: {confidence}%
@@ -247,19 +235,15 @@ ${data.response?.verification || ""}
         <div ref={chatEndRef} />
       </div>
 
-      {/* ⬇ Scroll */}
       {showScrollBtn && (
         <button
           className="scroll-btn"
-          onClick={() =>
-            chatEndRef.current?.scrollIntoView({behavior: 'smooth'})
-          }
+          onClick={() => chatEndRef.current?.scrollIntoView({behavior: 'smooth'})}
         >
           ⬇️
         </button>
       )}
 
-      {/* 📝 Input */}
       <div className="input-box">
         <textarea
           value={input}

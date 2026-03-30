@@ -1,27 +1,38 @@
-# backend/agents/memory.py
+from llm import generate_response
 
 memory_store = []
+conversation_history = []
 
-def save_memory(entry):
-    """
-    Saves past queries and results
-    """
+
+def save_memory(entry: dict):
+    """Save a past query and its result to memory."""
     memory_store.append(entry)
 
 
-def get_memory():
+def get_memory() -> list:
+    """Return all stored memories."""
     return memory_store
 
-conversation_history = []
 
-def run_workflow(user_input):
-    conversation_history.append({"role": "user", "content": user_input})
+def get_context_summary() -> str:
+    """
+    Generate a brief context summary from the last 3 conversation turns.
+    Useful for injecting history into agent prompts.
+    """
+    if not conversation_history:
+        return ""
 
-    context = str(conversation_history[-3:])  # last 3 messages
+    recent = conversation_history[-3:]
+    context_text = "\n".join(
+        f"{msg['role'].capitalize()}: {msg['content']}" for msg in recent
+    )
 
-    data = generate_response(
-    f"""
-    Understand context from conversation:
+    summary = generate_response(
+        f"Summarise this conversation context in 1-2 sentences:\n\n{context_text}"
+    )
+    return summary or context_text
 
-    {context}
-    """)
+
+def add_to_history(role: str, content: str):
+    """Add a message to conversation history."""
+    conversation_history.append({"role": role, "content": content})

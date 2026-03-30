@@ -1,14 +1,34 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-API_KEY = "8a2e2503f6a1c6dd6c180b55f03a1520"
+load_dotenv()
 
-def get_weather_by_coords(lat, lon):
-    url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&units=metric"
-    
-    data = requests.get(url).json()
+def get_weather(lat=19.99, lon=73.79, city=None):
+    """Open-Meteo — free, no API key required."""
+    try:
+        # If city given, geocode it first
+        if city:
+            geo = requests.get(
+                f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1",
+                timeout=5
+            ).json()
+            if geo.get("results"):
+                lat = geo["results"][0]["latitude"]
+                lon = geo["results"][0]["longitude"]
 
-    return {
-        "temperature": data["main"]["temp"],
-        "humidity": data["main"]["humidity"],
-        "condition": data["weather"][0]["description"]
-    }
+        url = (
+            f"https://api.open-meteo.com/v1/forecast"
+            f"?latitude={lat}&longitude={lon}"
+            f"&current=temperature_2m,relative_humidity_2m,weathercode"
+        )
+        data = requests.get(url, timeout=5).json()
+        current = data["current"]
+        return {
+            "temp": current["temperature_2m"],
+            "humidity": current["relative_humidity_2m"],
+            "condition": "Clear" if current["weathercode"] == 0 else "Cloudy"
+        }, "Detected Location"
+    except Exception as e:
+        print(f"Weather error: {e}")
+        return None, "Unknown"

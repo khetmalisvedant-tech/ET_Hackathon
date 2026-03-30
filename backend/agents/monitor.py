@@ -1,27 +1,28 @@
-from services.llm import generate_response
+from llm import generate_response
 
-def monitor_conditions(context):
 
+def monitor_conditions(context: dict) -> str:
+    """
+    Generate monitoring thresholds and alerts based on current conditions.
+    """
     prompt = f"""
-        You are a Monitoring Agent.
+You are a Monitoring Agent for a smart farming system.
 
-        Context:
-        {context}
+Current Conditions:
+- Temperature: {context['weather']['temperature']}°C
+- Humidity: {context['weather']['humidity']}%
+- Condition: {context['weather']['condition']}
+- Water Stress Index: {context.get('wsi', 'N/A')} ({context.get('wsi_level', 'Unknown')} stress)
 
-        Output rules:
+Apply these rules:
+- Soil Moisture >70%: STOP irrigation
+- Soil Moisture <40%: INCREASE irrigation
+- Temperature >35°C: increase watering frequency
+- Nutrient Low: apply fertilizer | Optimal: maintain | High: stop fertilization
 
-        Soil Moisture:
-        - >70% STOP irrigation
-        - <40% INCREASE irrigation
-
-        Temperature:
-        - >35°C increase watering
-
-        Nutrient Level:
-        - Low → apply fertilizer
-        - Optimal → maintain
-        - High → stop fertilization
-
-        Keep it structured and short.
-        """
-    return generate_response(prompt)
+Output a short, structured monitoring report with thresholds and recommended actions.
+"""
+    result = generate_response(prompt)
+    if not result:
+        return "⚠️ Monitor temperature and humidity every 6 hours. Maintain soil moisture between 40–70%."
+    return result

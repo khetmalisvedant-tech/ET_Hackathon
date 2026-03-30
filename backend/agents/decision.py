@@ -1,34 +1,40 @@
-from services.llm import generate_response
+from llm import generate_response
 
-def make_decision(context, user_input):
+
+def make_decision(context: dict, user_input: str) -> str:
+    """
+    Use LLM to generate a farming decision based on context and user query.
+    Falls back to a rule-based response if LLM fails.
+    """
     try:
         prompt = f"""
-You are an agricultural expert AI.
+You are an agricultural expert AI helping Indian farmers.
 
 Context:
-{context}
+- Location: {context.get('location', 'Unknown')}
+- Temperature: {context['weather']['temperature']}°C
+- Humidity: {context['weather']['humidity']}%
+- Condition: {context['weather']['condition']}
+- Month: {context.get('month', 'Unknown')}
+- Water Stress Index: {context.get('wsi', 'N/A')} ({context.get('wsi_level', 'Unknown')} stress)
 
 User Query:
 {user_input}
 
-Give a clear farming decision in 2-3 lines.
+Give a clear, actionable farming decision in 2-3 sentences.
 """
-
         response = generate_response(prompt)
 
-        # ❗ CRITICAL CHECK
-        if not response or "⚠️" in response or len(response) < 10:
-            raise Exception("Invalid LLM response")
+        if not response or len(response.strip()) < 10:
+            raise Exception("Empty or too-short LLM response")
 
         return response
 
     except Exception as e:
-        print("Decision error:", e)
-
-        # ✅ SMART FALLBACK (important for demo)
-        return f"""
-Based on current conditions (Temp: {context['weather']['temperature']}°C, 
-Humidity: {context['weather']['humidity']}%), irrigation is recommended.
-
-Monitor soil moisture regularly.
-"""
+        print(f"Decision error: {e}")
+        temp = context.get('weather', {}).get('temperature', 'N/A')
+        humidity = context.get('weather', {}).get('humidity', 'N/A')
+        return (
+            f"Based on current conditions (Temp: {temp}°C, Humidity: {humidity}%), "
+            "irrigation is recommended. Monitor soil moisture regularly."
+        )
